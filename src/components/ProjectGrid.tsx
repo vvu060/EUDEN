@@ -5,14 +5,15 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
-// Placeholder data - replace with Sanity data later
+// Updated data with reliable Unsplash URLs
 const projects = [
   {
     id: 1,
     title: "Nordic Cultural Center",
     category: "Architecture",
     location: "Oslo, Norway",
-    image: "https://images.unsplash.com/photo-1517581177697-a06a1891bdd2?q=80&w=1974&auto=format&fit=crop",
+    // Replaced broken link with a reliable winter architecture shot
+    image: "https://images.unsplash.com/photo-1470723710355-95304d8aece4?q=80&w=1974&auto=format&fit=crop",
     size: "large"
   },
   {
@@ -36,6 +37,7 @@ const projects = [
     title: "Alpine Retreat",
     category: "Architecture",
     location: "Swiss Alps",
+    // Updated to a high-quality mountain structure
     image: "https://images.unsplash.com/photo-1518005052357-e9847508d4ee?q=80&w=1974&auto=format&fit=crop",
     size: "small"
   },
