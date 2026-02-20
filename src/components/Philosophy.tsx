@@ -2,6 +2,8 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { Globe } from "lucide-react";
 
 export default function Philosophy() {
   return (
@@ -35,9 +37,13 @@ export default function Philosophy() {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <h3 className="text-xl font-medium mb-4">Adaptive Strategies</h3>
-            <p className="text-[#F4F4F4]/70 font-sans leading-relaxed">
+            <p className="text-[#F4F4F4]/70 font-sans leading-relaxed mb-8">
               Our work innovates design methodologies through context-driven research, aiming to create resilient spaces that stand the test of time.
             </p>
+            
+            <Link href="/explore" className="inline-flex items-center gap-3 text-[#D4AF37] hover:text-white transition-colors uppercase tracking-widest text-xs border-b border-[#D4AF37]/30 pb-1">
+              <Globe size={14} /> Explore Our Network
+            </Link>
           </motion.div>
         </div>
       </div>
