@@ -6,9 +6,8 @@ import { useSpring } from "@react-spring/web";
 
 export default function Globe() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const pointerInteracting = useRef(null);
+  const pointerInteracting = useRef<number | null>(null);
   const pointerInteractionMovement = useRef(0);
-  
   const [{ r }, api] = useSpring(() => ({
     r: 0,
     config: {
@@ -50,9 +49,9 @@ export default function Globe() {
         { location: [55.6761, 12.5683], size: 0.06 }, // Copenhagen
         { location: [46.9480, 7.4474], size: 0.06 }, // Swiss Alps
       ],
-      onRender: (state) => {
+      onRender: (state: Record<string, number>) => {
         // This prevents rotation while dragging
-        if (!pointerInteracting.current) {
+        if (pointerInteracting.current === null) {
           // Called on every animation frame.
           // `state` will be an empty object, return updated params.
           phi += 0.005;
@@ -63,14 +62,16 @@ export default function Globe() {
       },
     });
 
-    setTimeout(() => {
-        if (canvasRef.current) {
-            canvasRef.current.style.opacity = "1";
-        }
+    const timeoutId = setTimeout(() => {
+      if (canvasRef.current) {
+        canvasRef.current.style.opacity = "1";
+      }
     });
+
     return () => { 
       globe.destroy();
       window.removeEventListener("resize", onResize);
+      clearTimeout(timeoutId);
     };
   }, []);
 
@@ -80,28 +81,21 @@ export default function Globe() {
         ref={canvasRef}
         onPointerDown={(e) => {
           pointerInteracting.current = e.clientX - pointerInteractionMovement.current;
-          if (canvasRef.current) canvasRef.current.style.cursor = "grabbing";
+          canvasRef.current!.style.cursor = "grabbing";
         }}
         onPointerUp={() => {
           pointerInteracting.current = null;
-          if (canvasRef.current) canvasRef.current.style.cursor = "grab";
+          canvasRef.current!.style.cursor = "grab";
         }}
         onPointerOut={() => {
           pointerInteracting.current = null;
-          if (canvasRef.current) canvasRef.current.style.cursor = "grab";
+          canvasRef.current!.style.cursor = "grab";
         }}
-        onMouseMove={(e) => {
+        onPointerMove={(e) => {
           if (pointerInteracting.current !== null) {
             const delta = e.clientX - pointerInteracting.current;
             pointerInteractionMovement.current = delta;
             api.start({ r: delta / 200 });
-          }
-        }}
-        onTouchMove={(e) => {
-          if (pointerInteracting.current !== null && e.touches[0]) {
-            const delta = e.touches[0].clientX - pointerInteracting.current;
-            pointerInteractionMovement.current = delta;
-            api.start({ r: delta / 100 });
           }
         }}
         style={{
@@ -111,6 +105,7 @@ export default function Globe() {
           opacity: 0,
           transition: "opacity 1s ease",
           cursor: "grab",
+          touchAction: "none",
         }}
       />
     </div>
