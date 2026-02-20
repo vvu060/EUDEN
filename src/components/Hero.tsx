@@ -37,10 +37,16 @@ export default function Hero() {
         <Link href="/" className="text-2xl font-display font-medium tracking-tight text-[#1A1A1A]">
           EUDEN
         </Link>
-        <button className="flex items-center gap-2 text-sm uppercase tracking-widest hover:text-[#5D6D58] transition-colors">
-          <span>Menu</span>
-          <Menu size={20} strokeWidth={1.5} />
-        </button>
+        
+        <div className="flex items-center gap-8">
+          <Link href="/explore" className="hidden md:block text-sm uppercase tracking-widest hover:text-[#5D6D58] transition-colors">
+            Explore
+          </Link>
+          <button className="flex items-center gap-2 text-sm uppercase tracking-widest hover:text-[#5D6D58] transition-colors">
+            <span>Menu</span>
+            <Menu size={20} strokeWidth={1.5} />
+          </button>
+        </div>
       </nav>
 
       {/* Hero Content */}
