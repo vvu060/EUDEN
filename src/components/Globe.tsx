@@ -6,7 +6,7 @@ import { useSpring } from "@react-spring/web";
 
 export default function Globe() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const pointerInteracting = useRef(null);
+  const pointerInteracting = useRef<number | null>(null);
   const pointerInteractionMovement = useRef(0);
   
   const [{ r }, api] = useSpring(() => ({
