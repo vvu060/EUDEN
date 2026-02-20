@@ -1,12 +1,15 @@
 import Hero from "@/components/Hero";
+import ProjectGrid from "@/components/ProjectGrid";
+import Philosophy from "@/components/Philosophy";
+import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
+    <main className="flex min-h-screen flex-col bg-[#F4F4F4]">
       <Hero />
-      <section className="h-screen flex items-center justify-center bg-white w-full">
-        <h2 className="text-4xl font-display">Scroll to see Lenis + GSAP in action</h2>
-      </section>
+      <Philosophy />
+      <ProjectGrid />
+      <Contact />
     </main>
   );
 }
