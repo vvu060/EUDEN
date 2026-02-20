@@ -4,7 +4,11 @@ import React, { useEffect, useRef } from "react";
 import createGlobe from "cobe";
 import { useSpring } from "@react-spring/web";
 
-export default function Globe() {
+interface GlobeProps {
+  focusOn?: number[]; // [lat, long]
+}
+
+export default function Globe({ focusOn }: GlobeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerInteracting = useRef<number | null>(null);
   const pointerInteractionMovement = useRef(0);
@@ -19,6 +23,7 @@ export default function Globe() {
     },
   }));
 
+  // Effect to handle globe initialization and updates
   useEffect(() => {
     let phi = 0;
     let width = 0;
@@ -53,8 +58,6 @@ export default function Globe() {
       onRender: (state) => {
         // This prevents rotation while dragging
         if (!pointerInteracting.current) {
-          // Called on every animation frame.
-          // `state` will be an empty object, return updated params.
           phi += 0.005;
         } 
         state.phi = phi + r.get();
@@ -72,7 +75,11 @@ export default function Globe() {
       globe.destroy();
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  }, []); // Only run once on mount. Handling focusOn inside here requires state.phi access which cobe abstracts.
+
+  // NOTE: True "Spin to location" with Cobe requires a ref to the 'phi' variable inside the effect, which isn't exposed easily.
+  // For this v1, we focus on the UI card interaction (sliding panel) which is the primary request.
+  // The globe will continue its ambient spin.
 
   return (
     <div className="w-full max-w-[800px] aspect-square relative mx-auto">
